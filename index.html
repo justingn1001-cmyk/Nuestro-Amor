@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nuestro Amor ♡ A♡J</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;500;600;700&display=swap');
+*{box-sizing:border-box}
+body{margin:0;font-family:Poppins,sans-serif;background:linear-gradient(180deg,#cfefff 0%,#e5f8ee 100%);color:#416879;min-height:100vh;overflow-x:hidden}
+body:before{content:"☁️   ✦   ♡   ☁️   ✧   🦕   ♡   ☁️";position:fixed;inset:0;z-index:-1;opacity:.28;font-size:30px;line-height:115px;word-spacing:28px;pointer-events:none}
+.app{max-width:520px;margin:auto;min-height:100vh;padding-bottom:92px}
+header{padding:28px 22px 12px;text-align:center}
+.logo{font-family:Pacifico,cursive;font-size:34px;color:#5d9ab0;text-shadow:2px 3px white}
+.subtitle{font-size:12px;letter-spacing:2px;color:#7197a4}
+.card{margin:14px 18px;padding:20px;border-radius:28px;background:rgba(255,255,255,.82);box-shadow:0 10px 30px rgba(87,145,158,.14);border:2px solid rgba(255,255,255,.75)}
+.hero{text-align:center;padding:24px 18px}
+.character{font-size:76px;filter:drop-shadow(0 5px 3px rgba(0,0,0,.08))}
+h1,h2,h3{margin:4px 0 8px}
+h1{font-family:Pacifico,cursive;color:#5c99ad;font-size:30px}
+h2{font-size:20px;color:#568596}
+p{margin:7px 0;color:#6c8992;font-size:14px}
+.big{font-size:35px;font-weight:700;color:#5c99ad}
+button{border:0;border-radius:18px;padding:12px 17px;background:#9ed9c1;color:#fff;font-weight:700;font-family:Poppins;cursor:pointer;box-shadow:0 5px 12px rgba(95,160,150,.16)}
+button.secondary{background:#b8dff0;color:#4f8296}
+button.danger{background:#f0a8b8}
+input,textarea{width:100%;border:2px solid #d8edf0;border-radius:18px;padding:13px;font-family:Poppins;background:#fbffff;outline:none;color:#547681}
+textarea{min-height:130px;resize:vertical}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stat{text-align:center;padding:16px;border-radius:22px;background:#eefaf5}
+.stat b{display:block;font-size:22px;color:#6199a8}
+.page{display:none}.page.active{display:block}
+.list{display:flex;flex-direction:column;gap:10px}
+.item{padding:14px;border-radius:20px;background:#f5fbfa;border:1px solid #e2f1ef}
+.item strong{color:#5b8c9a}.item small{display:block;color:#94a9ae;margin-top:4px}
+.check{display:flex;gap:10px;align-items:center}.check input{width:auto}
+.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(520px,100%);padding:10px 12px;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);display:flex;justify-content:space-around;border-top:1px solid #d7ecec;z-index:10}
+.nav{background:none;box-shadow:none;color:#70909a;padding:7px 9px;font-size:11px}.nav span{display:block;font-size:22px}.nav.active{color:#5b9d8d}
+.mascot{display:inline-block;margin-left:5px}
+.empty{text-align:center;padding:20px;color:#91a8ad}
+.photo{height:125px;border-radius:22px;background:linear-gradient(135deg,#d9f2fb,#dff6e9);display:flex;align-items:center;justify-content:center;font-size:45px}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.day{padding:8px 2px;text-align:center;border-radius:12px;font-size:11px;background:#f4fbfa}.day.has{background:#bce7d4;color:#477d6e;font-weight:bold}
+.toast{position:fixed;top:18px;left:50%;transform:translateX(-50%) translateY(-100px);background:#5e9b8e;color:#fff;padding:12px 18px;border-radius:18px;transition:.3s;z-index:20}.toast.show{transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div id="toast" class="toast">Guardado ♡</div>
+<div class="app">
+<header><div class="logo">Nuestro Amor ♡</div><div class="subtitle">A ♡ J · un lugar solo para nosotros</div></header>
+
+<section id="home" class="page active">
+<div class="card hero"><div class="character">☁️🦕</div><h1>Adamar & Justin</h1><p>Bienvenidos a nuestro pequeño mundo</p><div class="big" id="days">0 días</div><p>de recuerdos, metas y momentos juntos ♡</p></div>
+<div class="grid">
+<div class="card stat"><b id="diaryCount">0</b>diarios</div>
+<div class="card stat"><b id="goalCount">0</b>metas</div>
+</div>
+<div class="card"><h2>💌 Mensajito</h2><p>Este espacio es para guardar las cosas bonitas que no queremos olvidar.</p></div>
+</section>
+
+<section id="diary" class="page">
+<div class="card"><h2>📖 Nuestro diario</h2><p>¿Cómo pasamos esta semana?</p><textarea id="diaryText" placeholder="Escribe aquí nuestro recuerdo..."></textarea><br><br><button onclick="saveDiary()">Guardar recuerdo ♡</button></div>
+<div class="card"><h2>Recuerdos guardados</h2><div id="diaryList" class="list"></div></div>
+</section>
+
+<section id="calendar" class="page">
+<div class="card"><h2>🗓️ Calendario</h2><p>Los días en los que escribimos aparecerán marcados.</p><div id="calendarGrid" class="calendar"></div></div>
+</section>
+
+<section id="notes" class="page">
+<div class="card"><h2>📝 Notitas</h2><input id="noteInput" placeholder="Escribe una notita..."><br><br><button onclick="addNote()">Añadir ♡</button></div>
+<div class="card"><div id="notesList" class="list"></div></div>
+</section>
+
+<section id="goals" class="page">
+<div class="card"><h2>🌱 Nuestras metas</h2><input id="goalInput" placeholder="Una meta para nosotros..."><br><br><button onclick="addGoal()">Añadir meta</button></div>
+<div class="card"><div id="goalsList" class="list"></div></div>
+</section>
+
+<section id="photos" class="page">
+<div class="card"><h2>📸 Nuestros momentos</h2><p>Galería preparada para nuestros recuerdos.</p><input type="file" accept="image/*" multiple onchange="addPhotos(event)"></div>
+<div class="card"><div id="photosGrid" class="grid"></div></div>
+</section>
+
+<section id="settings" class="page">
+<div class="card"><h2>⚙️ Ajustes</h2><p>Fecha de inicio</p><input id="startDate" type="date"><br><br><button onclick="saveSettings()">Guardar ajustes</button></div>
+<div class="card"><h2>🔒 Privacidad</h2><p>Esta versión guarda los datos localmente en este navegador. No sube tus recuerdos a Internet.</p><button class="danger" onclick="clearData()">Borrar datos locales</button></div>
+</section>
+</div>
+
+<nav class="bottom">
+<button class="nav active" data-page="home" onclick="showPage('home')"><span>🏠</span>Inicio</button>
+<button class="nav" data-page="diary" onclick="showPage('diary')"><span>📖</span>Diario</button>
+<button class="nav" data-page="calendar" onclick="showPage('calendar')"><span>🗓️</span>Calendario</button>
+<button class="nav" data-page="notes" onclick="showPage('notes')"><span>💌</span>Notas</button>
+<button class="nav" data-page="goals" onclick="showPage('goals')"><span>🌱</span>Metas</button>
+<button class="nav" data-page="photos" onclick="showPage('photos')"><span>📸</span>Fotos</button>
+<button class="nav" data-page="settings" onclick="showPage('settings')"><span>⚙️</span>Ajustes</button>
+</nav>
+
+<script>
+const KEY='nuestroAmorData';
+let data=JSON.parse(localStorage.getItem(KEY)||'null')||{diary:[],notes:[],goals:[],photos:[],startDate:''};
+function save(){localStorage.setItem(KEY,JSON.stringify(data));update()}
+function toast(t='Guardado ♡'){const x=document.getElementById('toast');x.textContent=t;x.classList.add('show');setTimeout(()=>x.classList.remove('show'),1500)}
+function showPage(id){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav').forEach(x=>x.classList.toggle('active',x.dataset.page===id));update()}
+function saveDiary(){let v=document.getElementById('diaryText').value.trim();if(!v)return;data.diary.unshift({text:v,date:new Date().toLocaleString('es-ES')});document.getElementById('diaryText').value='';save();toast('Recuerdo guardado ♡')}
+function addNote(){let v=document.getElementById('noteInput').value.trim();if(!v)return;data.notes.unshift({text:v,date:new Date().toLocaleDateString('es-ES')});document.getElementById('noteInput').value='';save();toast('Notita añadida 💌')}
+function addGoal(){let v=document.getElementById('goalInput').value.trim();if(!v)return;data.goals.push({text:v,done:false});document.getElementById('goalInput').value='';save();toast('Meta añadida 🌱')}
+function toggleGoal(i){data.goals[i].done=!data.goals[i].done;save()}
+function deleteGoal(i){data.goals.splice(i,1);save()}
+function addPhotos(e){[...e.target.files].forEach(f=>{let r=new FileReader();r.onload=()=>{data.photos.push(r.result);save()};r.readAsDataURL(f)})}
+function saveSettings(){data.startDate=document.getElementById('startDate').value;save();toast('Ajustes guardados ♡')}
+function clearData(){if(confirm('¿Seguro que quieres borrar los datos de este navegador?')){localStorage.removeItem(KEY);location.reload()}}
+function update(){
+ document.getElementById('diaryCount').textContent=data.diary.length;
+ document.getElementById('goalCount').textContent=data.goals.filter(g=>!g.done).length;
+ if(data.startDate){let d=Math.max(0,Math.floor((new Date()-new Date(data.startDate+'T00:00:00'))/86400000));document.getElementById('days').textContent=d+' días'}
+ document.getElementById('startDate').value=data.startDate||'';
+ document.getElementById('diaryList').innerHTML=data.diary.length?data.diary.map(x=>`<div class="item"><strong>♡ Recuerdo</strong><small>${x.date}</small><p>${escapeHtml(x.text)}</p></div>`).join(''):'<div class="empty">Todavía no hay recuerdos. Escribamos el primero ♡</div>';
+ document.getElementById('notesList').innerHTML=data.notes.length?data.notes.map(x=>`<div class="item"><strong>💌 Notita</strong><small>${x.date}</small><p>${escapeHtml(x.text)}</p></div>`).join(''):'<div class="empty">Aquí aparecerán nuestras notitas.</div>';
+ document.getElementById('goalsList').innerHTML=data.goals.length?data.goals.map((g,i)=>`<div class="item check"><input type="checkbox" ${g.done?'checked':''} onchange="toggleGoal(${i})"><span style="flex:1;text-decoration:${g.done?'line-through':'none'}">${escapeHtml(g.text)}</span><button class="danger" onclick="deleteGoal(${i})">×</button></div>`).join(''):'<div class="empty">Añade nuestra primera meta 🌱</div>';
+ document.getElementById('photosGrid').innerHTML=data.photos.length?data.photos.map(p=>`<img src="${p}" style="width:100%;height:125px;object-fit:cover;border-radius:22px">`).join(''):'<div class="photo">🦕♡☁️</div><div class="photo">📸♡</div>';
+ renderCalendar();
+}
+function renderCalendar(){
+ let grid=document.getElementById('calendarGrid'), now=new Date(), y=now.getFullYear(),m=now.getMonth(),first=new Date(y,m,1).getDay();first=(first+6)%7;let days=new Date(y,m+1,0).getDate(), marked=data.diary.map(x=>new Date(x.date).toLocaleDateString('es-ES'));
+ let s=['L','M','X','J','V','S','D'].map(d=>`<div class="day"><b>${d}</b></div>`).join('');
+ for(let i=0;i<first;i++)s+='<div></div>';
+ for(let d=1;d<=days;d++){let key=new Date(y,m,d).toLocaleDateString('es-ES');s+=`<div class="day ${marked.includes(key)?'has':''}">${d}${marked.includes(key)?' ♡':''}</div>`}
+ grid.innerHTML=s;
+}
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
+update();
+</script>
+</body>
+</html>
